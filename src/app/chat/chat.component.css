@@ -1,0 +1,11 @@
+.main-container {
+    display: flex;
+    width: 100%;
+    float: left;
+    position: relative;
+    flex-direction: row;
+}
+
+.chat-container {
+    margin: 0px 16px; 
+}

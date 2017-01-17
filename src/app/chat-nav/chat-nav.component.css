@@ -1,0 +1,13 @@
+.nav-container {
+    height: 5vh;
+    padding: 0px 15px;
+}
+
+hr {
+    margin-top:32px;
+    margin-bottom: 0px;
+}
+
+.username {
+    padding: 15px 15px 30px 15px;
+}

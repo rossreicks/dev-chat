@@ -1,0 +1,59 @@
+.threads-container {
+    height: 86vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0px 15px;
+}
+
+li {
+    text-decoration: none;
+}
+
+.message-container {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+
+.message-container:hover {
+}
+
+.message {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    height: 50px;
+    width: 50px;
+    background-color: grey;
+    padding: 5px 15px 15px 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.repeat {
+    height: 25px;
+    margin-top: 0px;
+}
+
+.repeat > .thumbnail {
+    display: none;
+}
+
+.repeat > .message > .date, .repeat > .message > .name {
+    display: none;
+}
+
+.repeat > .message > .data {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+.date {
+    text-decoration: none;
+    color: grey;
+    font-size: 10px;
+    font-style: italic;
+}

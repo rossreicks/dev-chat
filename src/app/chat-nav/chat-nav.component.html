@@ -1,0 +1,13 @@
+<div class="nav-container">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="channel"><strong>#general</strong></h4>
+      <span><i class="fa fa-star-o"></i> | <i class="fa fa-user-o"></i> 4 | <i class="fa fa-thumb-tack"></i> 0 | This is the summary of the chat channel</span>
+    </div>
+    <div class="col-md-3 input-group pull-right username">
+      <input #message class="form-control" placeholder="Change Username" (keyup.enter)="changeUser(message.value); message.value=''">
+      <span class="input-group-addon" (click)="changeUser(message.value); message.value=''">Change</span>
+    </div>
+  </div>
+</div>
+<hr>

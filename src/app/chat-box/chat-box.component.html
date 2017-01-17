@@ -1,0 +1,4 @@
+<div class="input-group chatbox-container">
+  <span role="button" class="input-group-addon" id="sendMessage" (click)="sendMessage(message.value);message.value=''"><span class="fa fa-plus fa-2x"></span></span>
+  <input #message (keyup.enter)="sendMessage(message.value);message.value=''" class="form-control message-input" placeholder="Message #general" aria-describedby="sendMessage"> 
+</div>
