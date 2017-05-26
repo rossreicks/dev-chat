@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { User } from './user.service';
 import { Message } from './message.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class TeamService {
@@ -12,11 +13,11 @@ export class TeamService {
 
   constructor(private http: Http) { }
 
-  createTeam(team: Team) {
+  createTeam(team: Team): Observable<Team> {
       return this.http.post(this.serverUrl + 'teams', team).map(res => res.json());
   }
 
-  getTeam(teamName: string) {
+  getTeam(teamName: string): Observable<Team> {
       return this.http.get(this.serverUrl + 'teams/' + teamName).map(res => res.json());
   }
 

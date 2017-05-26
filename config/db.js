@@ -1,3 +1,8 @@
-module.exports = {
-    url : 'mongodb://192.168.0.50/chat-dev'
-}
+const mysql = require('mysql');
+
+module.export const = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'dbuser',
+    password : 's3kreee7',
+    database : 'my_db'
+});

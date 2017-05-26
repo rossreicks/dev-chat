@@ -2,20 +2,13 @@
 const express = require('express');
 const path = require('path');
 const http = require('http');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const bodyParser = require('body-parser'); 
 const WebSocketServer = require('websocket').server;
 
 // Get our API routes
 const api = require('./routes/api');
 
 const app = express();
-
-//config files
-var db = require('./config/db');
-
-//connect to mongodb database
-mongoose.connect(db.url);
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -87,5 +80,4 @@ wsServer.on('request', function(r){
         delete clients[id];
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
-
 });

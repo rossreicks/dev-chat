@@ -1,23 +1,24 @@
-var Message = require('../models/models').Message;
-var Thread = require('../models/models').Thread;
-var User = require('../models/models').User;
-var Team = require('../models/models').Team;
 const express = require('express');
 
 var router = express.Router();
 
+//config files
+const db = require('./config/db');
+
+
 // server routes ===========================================================
 
 router.get('/messages', function(req, res) {
-    Message.find(function(err, message) {
-        if (err)
-            res.send(err);
-        
-        res.json(message); 
-    });
+  db.connect();
+  db.query('SELECT * FROM messages', (err, rows, fields) => {
+    if (err) throw err;
+    res.json(rows);
+  });
+
+  db.end();
 });
 
-router.get('/messages/:threadName', function(req, res) {
+/*router.get('/messages/:threadName', function(req, res) {
     var threadName = req.params['threadName'];
     if (threadName === undefined ) {
       threadName = 'general';
@@ -25,9 +26,9 @@ router.get('/messages/:threadName', function(req, res) {
     Thread.find({name: threadName})
     .populate(['messages', 'users'])
     .exec(function(err, thread) {
-      if (err)
+      if (err) {
         res.json(err)
-      
+      }
       res.json(thread);
     })
 });
@@ -41,7 +42,7 @@ router.post('/messages', function(req, res) {
       res.json(mes);
     });
   } else {
-    res.send("An eror occured");
+    res.send("An error occured");
   }
 });
 
@@ -106,4 +107,4 @@ router.delete('/messages', function(req, res) {
   res.send("DELETE called on message api endpoint")
 })
 
-module.exports = router
+module.exports = router*/

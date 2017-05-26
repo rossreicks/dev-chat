@@ -15,12 +15,14 @@ import { ChatStatusComponent } from './chat-status/chat-status.component';
 import { MessageService } from './services/message.service';
 import { UserService } from './services/user.service';
 import { TeamService} from './services/team.service';
+import { AuthService } from './services/auth.service';
 import { StartComponent } from './start/start.component';
 import { StartLoginComponent } from './start-login/start-login.component';
 import { StartGroupCreateComponent } from './start-group-create/start-group-create.component';
 import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     ChatNavComponent,
@@ -39,9 +41,8 @@ import { ChatComponent } from './chat/chat.component';
     ReactiveFormsModule,
     HttpModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
   ],
-  providers: [appRoutingProviders, MessageService, UserService, TeamService],
-  bootstrap: [AppComponent]
+  providers: [appRoutingProviders, MessageService, UserService, TeamService, AuthService],
 })
 export class AppModule { }

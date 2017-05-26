@@ -1,6 +1,18 @@
 <div class="nav-container">
   <div class='login-btn'>
-    <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+          <button
+        class="btn btn-primary btn-margin"
+        *ngIf="!auth.isAuthenticated()"
+        (click)="auth.login()">
+          Log In
+      </button>
+
+      <button
+        class="btn btn-primary btn-margin"
+        *ngIf="auth.isAuthenticated()"
+        (click)="auth.logout()">
+          Log Out
+      </button>
   </div>
 </div>
 

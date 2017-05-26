@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 import { StartGroupCreateComponent } from '../start-group-create/start-group-create.component';
 
@@ -14,12 +15,14 @@ export class StartComponent implements OnInit {
 
   public groupCreateForm: Boolean = false;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(public auth: AuthService) {
+    auth.handleAuthentication();
   }
 
-  toggleGroupCreateForm() {
+  ngOnInit(): void {
+  }
+
+  toggleGroupCreateForm(): void {
     this.groupCreateForm = !this.groupCreateForm;
   }
 

@@ -8,20 +8,21 @@ export class UserService {
 
   currentUser: Subject<User> = new Subject<User>();
 
-  constructor() { 
+  constructor() {
       this.currentUser.next(this.getUser());
   }
 
-  setUser(user: User) {
+  setUser(user: User): void {
       this.currentUser.next(user);
       localStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUser() {
+  getUser(): User {
       let user = localStorage.getItem('user');
       if (user == null) {
           return new User('', '');
-      } return JSON.parse(user);
+      }
+      return JSON.parse(user);
   }
 
 }
