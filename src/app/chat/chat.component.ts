@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { TeamService, Team } from '../services/team.service';
-import { User } from '../services/user.service';
+import { TeamService } from '../services/team.service';
+import { Team } from '../services/models';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class ChatComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.switchMap((params: Params) => this.teamService.getTeam(params['teamName']))
+    this.route.params.switchMap((params: Params) => this.teamService.getTeam(+params['teamId']))
     .subscribe(team => {
       this.team = team;
     });

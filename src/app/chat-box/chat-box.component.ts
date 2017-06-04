@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MessageService, Message } from '../services/message.service';
-import { UserService, User } from '../services/user.service';
-import { Team } from '../services/team.service';
+import { MessageService } from '../services/message.service';
+import { UserService } from '../services/user.service';
+import { Team, User, Message } from '../services/models';
 
 @Component({
   selector: 'app-chat-box',
@@ -26,7 +26,12 @@ export class ChatBoxComponent implements OnInit {
   }
 
   sendMessage(data: string) {
-    let message: Message = new Message(this.currentUser, data, new Date());
+    let message: Message = {
+          id: -1,
+          user: this.currentUser,
+          data: data,
+          timestamp: new Date()
+    };
     this.messageService.post(message).subscribe();
   }
 

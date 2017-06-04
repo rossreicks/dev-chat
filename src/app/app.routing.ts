@@ -6,9 +6,8 @@ import { StartComponent } from './start/start.component';
 
 
 const appRoutes: Routes = [
-  { path: 'chat/:teamName', component: ChatComponent},
+  { path: 'chat/:teamId', component: ChatComponent},
   { path: 'start', component: StartComponent},
-  { path: 'chat/:teamName/:threadName', component: ChatComponent},
   { path: '', redirectTo: '/start', pathMatch: 'full'}
 ];
 

@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Subject, Observable, BehaviorSubject} from 'rxjs';
-import { User } from '../services/user.service';
+
+import { Message, User } from './models';
 
 @Injectable()
 export class MessageService {
@@ -41,10 +42,4 @@ export class MessageService {
     this.ws.send(message);
   }
 
-}
-
-export class Message {
-    constructor(public user: User,
-                public data: string,
-                public timeStamp: Date) { }
 }

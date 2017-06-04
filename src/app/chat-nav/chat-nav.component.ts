@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewContainerRef, Input } from '@angular/core';
-import { UserService, User } from '../services/user.service';
-import { TeamService, Team } from '../services/team.service';
+import { UserService } from '../services/user.service';
+import { TeamService} from '../services/team.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { Team, User} from '../services/models';
 
 @Component({
   selector: 'app-chat-nav',
@@ -29,7 +30,7 @@ export class ChatNavComponent implements OnInit {
   }
 
   changeUser(name: string) {
-    this.userService.setUser(new User(name, '', this.getRandomColor()));
+    //this.userService.setUser(new User(name, '', this.getRandomColor()));
   }
 
   toggleModal() {

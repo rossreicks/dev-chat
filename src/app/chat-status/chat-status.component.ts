@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserService, User } from '../services/user.service';
-import { Team, TeamService, Thread } from '../services/team.service';
+import { UserService } from '../services/user.service';
+import { TeamService } from '../services/team.service';
+import { Team, User, Thread } from '../services/models';
 
 @Component({
   selector: 'app-chat-status',

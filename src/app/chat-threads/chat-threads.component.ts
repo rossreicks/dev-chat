@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Renderer, AfterViewInit, AfterViewChecked, ElementRef, Input } from '@angular/core';
-import { MessageService, Message } from '../services/message.service';
+import { MessageService } from '../services/message.service';
 import * as moment from 'moment';
-import { Team } from '../services/team.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Team, Message } from '../services/models';
 
 @Component({
   selector: 'app-chat-threads',

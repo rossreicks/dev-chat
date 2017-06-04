@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from './../services/user.service';
-import { Team, TeamService } from './../services/team.service';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { User, Team, TeamCreate } from './../services/models';
+import { TeamService } from './../services/team.service';
+import {AbstractControl} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-group-create',
@@ -13,7 +15,7 @@ export class StartGroupCreateComponent implements OnInit {
   public visible = false;
   private visibleAnimate = false;
 
-  team: FormGroup;
+  form: FormGroup;
 
   public show(): void {
     this.visible = true;
@@ -25,28 +27,28 @@ export class StartGroupCreateComponent implements OnInit {
     setTimeout(() => this.visible = false, 300);
   }
 
-  constructor(private teamService: TeamService) { }
+  constructor(private teamService: TeamService, public router: Router, public fb: FormBuilder) {
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      nickname: [''],
+      email: ['', Validators.required],
+      icon: [''],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, {
+      validator: PasswordValidation.MatchPassword
+    })
+   }
 
   ngOnInit() {
-    this.team = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(65)]),
-      description: new FormControl(''),
-      user: new FormGroup({
-        username: new FormControl(''),
-        email: new FormControl(''),
-        password: new FormControl(''),
-        confirmPassword: new FormControl(''),
-        icon: new FormControl('')
-      })
-    });
   }
 
   onSubmit() {
-    let formTeam = this.team.value;
-    let formUser = formTeam.user;
-    let user = new User(formUser.username, formUser.email, this.getRandomColor());
-    let team = new Team(formTeam.name, user, formTeam.description);
-    this.teamService.createTeam(team).subscribe();
+    console.log(this.form);
+    let teamCreate: TeamCreate = this.form.value;
+    teamCreate.icon = this.getRandomColor();
+    this.teamService.createTeam(teamCreate).subscribe(team => this.router.navigate(['chat', team.id]));
   }
 
   getRandomColor() {
@@ -58,4 +60,18 @@ export class StartGroupCreateComponent implements OnInit {
     return color;
   }
 
+}
+class PasswordValidation {
+
+    static MatchPassword(AC: AbstractControl) {
+       let password = AC.get('password').value; // to get value in input tag
+       let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
+        if(password === '' || password != confirmPassword) {
+            console.log('false');
+            AC.get('confirmPassword').setErrors( {MatchPassword: true} )
+        } else {
+            console.log('true');
+            return null
+        }
+    }
 }
