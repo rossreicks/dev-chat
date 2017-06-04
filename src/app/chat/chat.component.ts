@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { GroupService } from '../services/group.service';
-import { UserService } from '../services/user.service';
+import { TeamService } from '../services/team.service';
+import { Team } from '../services/models';
 
-import { Group } from '../models/group.model';
 
 @Component({
   selector: 'app-chat',
@@ -11,15 +10,15 @@ import { Group } from '../models/group.model';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  group: Group;
+  team: Team;
 
-  constructor(private teamService: GroupService,
+  constructor(private teamService: TeamService,
               private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.teamService.getGroup(params['groupName']))
-    .subscribe(group => {
-      this.group = group;
+  ngOnInit() {
+    this.route.params.switchMap((params: Params) => this.teamService.getTeam(+params['teamId']))
+    .subscribe(team => {
+      this.team = team;
     });
   }
 

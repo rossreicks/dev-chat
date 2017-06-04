@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, Renderer, AfterViewInit, AfterViewChecked, ElementRef, Input } from '@angular/core';
-import { Message } from '../models/message.model';
 import { MessageService } from '../services/message.service';
 import * as moment from 'moment';
-import { Group } from '../models/group.model';
 import { ActivatedRoute, Params } from '@angular/router';
-//import { IMessage } from '../services/models';
+import { Team, Message } from '../services/models';
 
 @Component({
   selector: 'app-chat-threads',
@@ -16,7 +14,7 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
   @ViewChild('content') content: ElementRef;
 
   @Input()
-  group: Group;
+  team: Team;
 
   messages: Message[];
 
@@ -28,32 +26,32 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
     });
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
+    this.scrollToBottom()
+  }
+
+  ngAfterViewChecked() {
     this.scrollToBottom();
   }
 
-  ngAfterViewChecked(): void {
-    this.scrollToBottom();
-  }
-
-  appendMessage(newMessage: Message): void {
+  appendMessage(newMessage: Message) {
       this.messages.push(newMessage);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.params.switchMap((params: Params) => this.messageService.getAll(params['threadName']))
     .subscribe(messages => {
       this.messages = messages;
     });
   }
 
-  scrollToBottom(): void {
+  scrollToBottom() {
     try {
       this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
     } catch (err) {}
   }
 
-  convertDate(date: Date): String {
+  convertDate(date: Date) {
     return moment().format('h:m A');
   }
 

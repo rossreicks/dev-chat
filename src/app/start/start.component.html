@@ -1,28 +1,10 @@
-<div class="nav-container">
-  <div class='login-btn'>
-      <button
-        class="btn btn-primary btn-margin"
-        *ngIf="!auth.isAuthenticated()"
-        (click)="auth.login()">
-          Log In
-      </button>
-
-      <button
-        class="btn btn-primary btn-margin"
-        *ngIf="auth.isAuthenticated()"
-        (click)="auth.logout()">
-          Log Out
-      </button>
-  </div>
-</div>
-
 <div class="start-container">
-  <div class="group-container">
+  <div class="team-container">
     <h3 class="text-center">Start</h3>
     <h3 class="text-center">Now</h3>
-    <button class="btn btn-default" (click)="modal.show()">Create A Group</button>
+    <button class="btn btn-default" (click)=modal.show()>Create A Team</button>
   </div>
 </div>
-<create-group></create-group>
+<app-start-group-create></app-start-group-create>
 
 

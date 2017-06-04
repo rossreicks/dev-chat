@@ -22,9 +22,6 @@ export class UserService {
 
   getUser(): IUser {
       let user = localStorage.getItem('user');
-      if (user == null) {
-          return;
-      }
       return JSON.parse(user);
   }
 

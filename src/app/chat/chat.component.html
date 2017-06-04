@@ -1,15 +1,15 @@
-<div class="main-container" *ngIf="group">
-  <app-chat-status [group]="group"></app-chat-status>
+<div class="main-container" *ngIf="team">
+  <app-chat-status [team]="team"></app-chat-status>
 
   <div class="chat-container">
     <div class="row">
-      <app-chat-nav [group]="group"></app-chat-nav>
+      <app-chat-nav [team]="team"></app-chat-nav>
     </div>
     <div class="row">
-      <app-chat-threads [group]="group"></app-chat-threads>
+      <app-chat-threads [team]="team"></app-chat-threads>
     </div>
     <div class="row">
-      <app-chat-box [group]="group"></app-chat-box>
+      <app-chat-box [team]="team"></app-chat-box>
     </div>
   </div>
 </div>

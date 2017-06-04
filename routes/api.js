@@ -117,7 +117,6 @@ router.post('/messages', function(req, res) {
     res.send("An error occured");
   }
 });
-
 */
 router.get('/teams/:id', function(req, res) {
   let teamId = req.params['id'];

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import {Subject, Observable, BehaviorSubject} from 'rxjs';
+
 import { IMessage, IUser } from './models';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class MessageService {
     };
   }
 
-  post(message: IMessage): Observable<IMessage> {
+  post(message: IMessage) {
     this.sendMessage(JSON.stringify(message));
     return this.http.post(this.serverUrl + 'messages', message).map(res => res.json());
   }
@@ -37,7 +38,7 @@ export class MessageService {
     return this.http.get(this.serverUrl + 'messages/{id}').map(res => res.json() as IMessage);
   }
 
-  sendMessage(message): void {
+  sendMessage(message) {
     this.ws.send(message);
   }
 

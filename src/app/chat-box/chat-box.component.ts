@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { UserService } from '../services/user.service';
-import { GroupService } from '../services/group.service';
-import { User } from '../models/user.model';
-import { Message } from '../models/message.model';
-import { Group } from '../models/group.model';
+import { Team, User, Message } from '../services/models';
 
 @Component({
   selector: 'app-chat-box',
@@ -13,7 +10,7 @@ import { Group } from '../models/group.model';
 })
 export class ChatBoxComponent implements OnInit {
   @Input()
-  group: Group;
+  team: Team;
 
 
   currentUser: User;
@@ -25,10 +22,10 @@ export class ChatBoxComponent implements OnInit {
       this.userService.currentUser.subscribe(user => this.currentUser = user);
     }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  sendMessage(data: string): void {
+  sendMessage(data: string) {
     let message: Message = {
           id: -1,
           user: this.currentUser,
