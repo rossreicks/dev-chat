@@ -14,10 +14,10 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ChatStatusComponent } from './chat-status/chat-status.component';
 import { MessageService } from './services/message.service';
 import { UserService } from './services/user.service';
-import { TeamService} from './services/team.service';
+import { GroupService} from './services/group.service';
 import { StartComponent } from './start/start.component';
 import { StartLoginComponent } from './start-login/start-login.component';
-import { StartGroupCreateComponent } from './start-group-create/start-group-create.component';
+import { GroupCreateComponent } from './group-create/group-create.component';
 import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { ChatComponent } from './chat/chat.component';
     ChatStatusComponent,
     StartComponent,
     StartLoginComponent,
-    StartGroupCreateComponent,
+    GroupCreateComponent,
     ChatComponent
   ],
   imports: [
@@ -42,6 +42,7 @@ import { ChatComponent } from './chat/chat.component';
     ModalModule.forRoot(),
     BootstrapModalModule,
   ],
-  providers: [appRoutingProviders, MessageService, UserService, TeamService],
+
+  providers: [appRoutingProviders, MessageService, UserService, GroupService ],
 })
 export class AppModule { }

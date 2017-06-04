@@ -87,7 +87,7 @@ router.post('/teams', function(req, res) {
   }
 });
 
-/*router.get('/messages/:threadName', function(req, res) {
+router.get('/messages/:threadName', function(req, res) {
     var threadName = req.params['threadName'];
     if (threadName === undefined ) {
       threadName = 'general';
@@ -114,7 +114,6 @@ router.post('/messages', function(req, res) {
     res.send("An error occured");
   }
 });
-*/
 router.get('/teams/:id', function(req, res) {
   let teamId = req.params['id'];
   let team = {};
