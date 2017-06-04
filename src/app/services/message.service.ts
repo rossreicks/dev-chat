@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {Subject, Observable, BehaviorSubject} from 'rxjs';
-import { User } from '../services/user.service';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Message } from '../models/message.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class MessageService {
@@ -20,12 +21,12 @@ export class MessageService {
     };
   }
 
-  post(message: Message) {
+  post(message: Message): Observable<Message> {
     this.sendMessage(JSON.stringify(message));
     return this.http.post(this.serverUrl + 'messages', message).map(res => res.json());
   }
 
-  delete(message: Message) {
+  delete(message: Message): Observable<Message> {
     return this.http.delete(this.serverUrl + 'messages').map(res => res.json());
   }
 
@@ -37,14 +38,9 @@ export class MessageService {
     return this.http.get(this.serverUrl + 'messages/{id}').map(res => res.json() as Message);
   }
 
-  sendMessage(message) {
+  sendMessage(message): void {
     this.ws.send(message);
   }
 
 }
 
-export class Message {
-    constructor(public user: User,
-                public data: string,
-                public timeStamp: Date) { }
-}

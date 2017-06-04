@@ -18,7 +18,7 @@ import { TeamService} from './services/team.service';
 import { AuthService } from './services/auth.service';
 import { StartComponent } from './start/start.component';
 import { StartLoginComponent } from './start-login/start-login.component';
-import { StartGroupCreateComponent } from './start-group-create/start-group-create.component';
+import { GroupCreateComponent } from './group-create/group-create.component';
 import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { ChatComponent } from './chat/chat.component';
     ChatStatusComponent,
     StartComponent,
     StartLoginComponent,
-    StartGroupCreateComponent,
+    GroupCreateComponent,
     ChatComponent
   ],
   imports: [

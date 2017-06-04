@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { User } from './user.service';
-import { Message } from './message.service';
+import { Group } from '../models/group.model';
+import { Message } from '../models/message.model';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -13,33 +14,12 @@ export class TeamService {
 
   constructor(private http: Http) { }
 
-  createTeam(team: Team): Observable<Team> {
-      return this.http.post(this.serverUrl + 'teams', team).map(res => res.json());
+  createTeam(group: Group): Observable<Group> {
+      return this.http.post(this.serverUrl + 'teams', group).map(res => res.json());
   }
 
-  getTeam(teamName: string): Observable<Team> {
-      return this.http.get(this.serverUrl + 'teams/' + teamName).map(res => res.json());
+  getTeam(groupName: string): Observable<Group> {
+      return this.http.get(this.serverUrl + 'teams/' + groupName).map(res => res.json());
   }
 
-}
-
-export class Team {
-    constructor(
-        public name: string,
-        public owner: User,
-        public description?: string,
-        public _id?: string,
-        public threads?: Thread[],
-        public users?: User[]
-        ) { }
-};
-
-export class Thread {
-    constructor(
-        public name: string,
-        public description: string,
-        public users?: User[],
-        public messages?: Message[],
-        public _id?: string
-    ) { }
 }

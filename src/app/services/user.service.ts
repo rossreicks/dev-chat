@@ -3,6 +3,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs';
 
+import { User } from '../models/user.model';
+
 @Injectable()
 export class UserService {
 
@@ -20,17 +22,10 @@ export class UserService {
   getUser(): User {
       let user = localStorage.getItem('user');
       if (user == null) {
-          return new User('', '');
+          return;
       }
       return JSON.parse(user);
   }
 
 }
 
-export class User {
-    constructor(
-        public name: string,
-        public email: string,
-        public icon?: string,
-        public _id?: string) { }
-};

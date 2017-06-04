@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
-import { StartGroupCreateComponent } from '../start-group-create/start-group-create.component';
+import { GroupCreateComponent } from '../group-create/group-create.component';
 
 @Component({
   selector: 'app-start',
@@ -10,8 +10,8 @@ import { StartGroupCreateComponent } from '../start-group-create/start-group-cre
 })
 export class StartComponent implements OnInit {
 
-  @ViewChild(StartGroupCreateComponent)
-  public readonly modal: StartGroupCreateComponent;
+  @ViewChild(GroupCreateComponent)
+  public readonly modal: GroupCreateComponent;
 
   public groupCreateForm: Boolean = false;
 

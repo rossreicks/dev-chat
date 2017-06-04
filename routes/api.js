@@ -18,7 +18,7 @@ router.get('/messages', function(req, res) {
   db.end();
 });
 
-/*router.get('/messages/:threadName', function(req, res) {
+router.get('/messages/:threadName', function(req, res) {
     var threadName = req.params['threadName'];
     if (threadName === undefined ) {
       threadName = 'general';
@@ -107,4 +107,4 @@ router.delete('/messages', function(req, res) {
   res.send("DELETE called on message api endpoint")
 })
 
-module.exports = router*/
+module.exports = router
