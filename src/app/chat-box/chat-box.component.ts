@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { GroupService } from '../services/group.service';
 import { User } from '../models/user.model';
 import { Message } from '../models/message.model';
+import { Group } from '../models/group.model';
 
 @Component({
   selector: 'app-chat-box',
@@ -12,6 +13,8 @@ import { Message } from '../models/message.model';
 })
 export class ChatBoxComponent implements OnInit {
   @Input()
+  group: Group;
+
 
   currentUser: User;
 
@@ -26,8 +29,13 @@ export class ChatBoxComponent implements OnInit {
   }
 
   sendMessage(data: string): void {
-    let message: Message = new Message(this.currentUser, data, new Date());
+    let message: Message = {
+          id: -1,
+          user: this.currentUser,
+          data: data,
+          timestamp: new Date()
+    };
     this.messageService.post(message).subscribe();
-  };
+  }
 
 }

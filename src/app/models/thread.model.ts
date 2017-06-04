@@ -1,14 +1,15 @@
-import { IUser } from './Interfaces/IUser.model';
-import { IMessage } from './Interfaces/IMessage.model';
+import { IUser, IMessage, IThread } from '../services/models';
 
-export class Thread {
+export class Thread implements IThread {
+    id: number;
+    teamId: number;
     name: string;
     description: string;
     users?: IUser[];
-    messages?: IMessage[];
+    messages: IMessage[];
     _id?: string;
 
-    constructor(name, description) {
+    constructor(name: string, description: string) {
         this.name = name;
         this.description = description;
     }

@@ -25,6 +25,7 @@ const db = mysql.createConnection({
 //   next();
 //  });
 
+
 router.get('/messages', function(req, res) {
   //db.connect();
   db.query('SELECT * FROM messages', (err, rows, fields) => {
@@ -33,6 +34,7 @@ router.get('/messages', function(req, res) {
     res.json(rows);
   });
 });
+
 
 router.post('/teams', function(req, res) {
   if(req.body) {
@@ -87,7 +89,7 @@ router.post('/teams', function(req, res) {
   }
 });
 
-router.get('/messages/:threadName', function(req, res) {
+/*router.get('/messages/:threadName', function(req, res) {
     var threadName = req.params['threadName'];
     if (threadName === undefined ) {
       threadName = 'general';
@@ -102,6 +104,7 @@ router.get('/messages/:threadName', function(req, res) {
     })
 });
 
+
 router.post('/messages', function(req, res) {
   if(req.body) {
     Message.create(req.body, function(err, mes) {
@@ -114,6 +117,8 @@ router.post('/messages', function(req, res) {
     res.send("An error occured");
   }
 });
+
+*/
 router.get('/teams/:id', function(req, res) {
   let teamId = req.params['id'];
   let team = {};

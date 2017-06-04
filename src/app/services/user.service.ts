@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs';
-//import { User } from './models';
+import { IUser } from './models';
 
 import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
 
-  currentUser: Subject<User> = new Subject<User>();
+  currentUser: Subject<IUser> = new Subject<IUser>();
 
   constructor() {
       this.currentUser.next(this.getUser());
   }
 
-  setUser(user: User): void {
+  setUser(user: IUser): void {
       this.currentUser.next(user);
       localStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUser(): User {
+  getUser(): IUser {
       let user = localStorage.getItem('user');
       if (user == null) {
           return;

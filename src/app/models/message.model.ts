@@ -1,14 +1,14 @@
-import { IUser } from './Interfaces/IUser.model';
-import { User } from './user.model';
+import { IUser, IMessage } from '../services/models';
 
-export class Message {
+export class Message implements IMessage {
+    timestamp: Date;
+    id: number;
     user: IUser;
     data: string;
-    timeStamp: Date;
 
-    constructor(user, data, timeStamp) {
+    constructor(user: IUser, data: string, timestamp: Date) {
         this.user = user;
         this.data = data;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
     }
 }

@@ -1,13 +1,13 @@
-export class User {
-    username: String;
-    email: String;
-    password: String;
-    icon: String;
+import { IUser } from '../services/models';
 
-    constructor(username: String, email: String, password: String, icon: String) {
+export class User implements IUser {
+    id: number;
+    email: string;
+    username: string;
+    icon: string;
+
+    constructor(username: string, email: string, icon: string) {
         this.username = username;
-        this.email = email;
-        this.password = password;
         this.icon = icon;
     }
 }

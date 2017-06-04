@@ -1,17 +1,16 @@
-import { IUser } from './Interfaces/IUser.model';
-import { IThread } from './Interfaces/IThread.model';
+import { IUser, IThread, IGroup } from '../services/models';
 
-export class Group {
-    name: String;
+export class Group implements IGroup {
+    name: string;
     id: number;
-    ownerId: number;
+    owner: IUser;
     users: IUser[];
     threads: IThread[];
-    description: String;
+    description: string;
 
-    constructor(name, ownerId, description) {
+    constructor(name: string, owner: IUser, description: string) {
         this.name = name;
-        this.ownerId = ownerId;
+        this.owner = owner;
         this.description = description;
     }
 }

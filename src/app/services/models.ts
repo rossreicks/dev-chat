@@ -1,37 +1,38 @@
-export interface Team {
-    id: number,
-    name: string,
-    owner: User,
-    description: string,
-    threads: Thread[],
-    users: User[]
+export interface IGroup {
+    id: number;
+    name: string;
+    owner: IUser;
+    description: string;
+    threads: IThread[];
+    users: IUser[];
 }
 
-export interface User {
-    id: number,
-    nickname: string,
-    icon: string
+export interface IUser {
+    id: number;
+    email: string;
+    username: string;
+    icon: string;
 }
 
-export interface Thread {
-    id: number,
-    messages: Message[],
-    name: string,
-    teamId: number
+export interface IThread {
+    id: number;
+    messages: IMessage[];
+    name: string;
+    teamId: number;
 }
 
-export interface Message {
-    id: number,
-    data: string,
-    timestamp: Date,
-    user: User
+export interface IMessage {
+    id: number;
+    data: string;
+    timestamp: Date;
+    user: IUser;
 }
 
-export interface TeamCreate {
-    email: string,
-    password: string,
-    team: string,
-    description: string,
-    nickname: string,
-    icon: string
+export interface IGroupCreate {
+    email: string;
+    password: string;
+    team: string;
+    description: string;
+    nickname: string;
+    icon: string;
 }

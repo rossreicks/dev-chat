@@ -5,7 +5,6 @@ import { Group } from '../models/group.model';
 import { User } from '../models/user.model';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
-//import { Team, User} from '../services/models';
 
 @Component({
   selector: 'app-chat-nav',
@@ -15,7 +14,6 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 export class ChatNavComponent implements OnInit {
   @Input()
   group: Group;
-  user: User;
 
   showModal: boolean;
 
@@ -33,7 +31,7 @@ export class ChatNavComponent implements OnInit {
   }
 
   changeUser(name: string): void {
-    this.userService.setUser(new User(name, '', 'add password', this.getRandomColor()));
+    this.userService.setUser(new User(name, '', this.getRandomColor()));
   }
 
   toggleModal(): void {
@@ -49,5 +47,6 @@ export class ChatNavComponent implements OnInit {
     }
     return color;
   }
+
 
 }
