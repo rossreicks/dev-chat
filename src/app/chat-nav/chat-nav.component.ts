@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewContainerRef, Input } from '@angular/core';
-import { UserService, User } from '../services/user.service';
-import { TeamService, Team } from '../services/team.service';
+import { UserService } from '../services/user.service';
+import { GroupService } from '../services/group.service';
+import { Group } from '../models/group.model';
+import { User } from '../models/user.model';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
@@ -11,7 +13,8 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 })
 export class ChatNavComponent implements OnInit {
   @Input()
-  team: Team;
+  group: Group;
+  user: User;
 
   showModal: boolean;
 
@@ -25,19 +28,19 @@ export class ChatNavComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  changeUser(name: string) {
-    this.userService.setUser(new User(name, '', this.getRandomColor()));
+  changeUser(name: string): void {
+    this.userService.setUser(new User(name, '', 'add password', this.getRandomColor()));
   }
 
-  toggleModal() {
+  toggleModal(): void {
     this.showModal = !this.showModal;
     console.log(this.showModal);
   }
 
-  getRandomColor() {
+  getRandomColor(): string {
     let letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++ ) {

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from '../models/user.model';
 import { Group } from '../models/group.model';
-import { TeamService } from './../services/team.service';
+import { GroupService } from './../services/group.service';
 
 @Component({
   selector: 'create-group',
@@ -14,8 +14,8 @@ export class GroupCreateComponent implements OnInit {
 
   public visible = false;
   private visibleAnimate = false;
-  private group: Group = new Group();
-  private user: User = new User();
+  private group: Group;
+  private user: User;
   // encrypt this?
   private confirmPassword: String;
 
@@ -29,7 +29,7 @@ export class GroupCreateComponent implements OnInit {
     setTimeout(() => this.visible = false, 300);
   }
 
-  constructor(private teamService: TeamService) { }
+  constructor(private teamService: GroupService) { }
 
   ngOnInit(): void {
   }

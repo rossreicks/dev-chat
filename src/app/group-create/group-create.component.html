@@ -3,9 +3,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
-        Create a Team
+        Create a group
       </div>
-      <form class="form-horizontal" #teamForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+      <form class="form-horizontal" #groupForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="modal-body">
             <div class="form-group">
                 <label for="group-name" class="col-sm-4 control-label">Group Name</label>
@@ -18,7 +18,7 @@
                     #groupName="ngModel"
                     required>
                   <span class="text-danger">Required *</span>
-                  <span class="text-danger" [hidden]="groupName.valid || (groupName.pristine && !teamForm.submitted)">Group name is required</span>
+                  <span class="text-danger" [hidden]="groupName.valid || (groupName.pristine && !groupForm.submitted)">Group name is required</span>
                 </div>
             </div>
             <div class="form-group">
@@ -38,7 +38,7 @@
                   #userEmail="ngModel"
                   required>
                 <span class="text-danger">Required *</span>
-                <span class="text-danger" [hidden]="groupName.valid || (groupName.pristine && !teamForm.submitted)">Email is required</span>
+                <span class="text-danger" [hidden]="groupName.valid || (groupName.pristine && !groupForm.submitted)">Email is required</span>
               </div>
             </div>
             <div class="form-group">
@@ -69,7 +69,7 @@
                   name="confirmPassword"
                   #confirmPassword="ngModel"
                   required>
-                <div class="alert alert-danger" *ngIf="teamForm.controls.confirmPassword.errors?.MatchPassword">Password not match</div>
+                <div class="alert alert-danger" *ngIf="groupForm.controls.confirmPassword.errors?.MatchPassword">Password not match</div>
               </div>
             </div>
             <div class="form-group">
@@ -82,7 +82,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" (click)="hide()">Close</button>
-            <button type="submit" class="btn btn-primary" [disabled]="teamForm.invalid">Create Team</button>
+            <button type="submit" class="btn btn-primary" [disabled]="groupForm.invalid">Create group</button>
         </div>
       </form>
     </div>

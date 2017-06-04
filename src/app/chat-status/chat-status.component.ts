@@ -3,7 +3,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { Group } from '../models/group.model';
 import { Thread } from '../models/thread.model';
-import { TeamService } from '../services/team.service';
+import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-chat-status',
