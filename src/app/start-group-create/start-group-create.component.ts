@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { User, Team, TeamCreate } from './../services/models';
+import { IUser, ITeam, ITeamCreate } from './../services/models';
 import { TeamService } from './../services/team.service';
 import {AbstractControl} from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,11 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./start-group-create.component.css']
 })
 export class StartGroupCreateComponent implements OnInit {
-
+  form: FormGroup;
   public visible = false;
   private visibleAnimate = false;
-
-  form: FormGroup;
 
   public show(): void {
     this.visible = true;
@@ -38,20 +36,20 @@ export class StartGroupCreateComponent implements OnInit {
       confirmPassword: ['', Validators.required]
     }, {
       validator: PasswordValidation.MatchPassword
-    })
+    });
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     console.log(this.form);
-    let teamCreate: TeamCreate = this.form.value;
+    let teamCreate: ITeamCreate = this.form.value;
     teamCreate.icon = this.getRandomColor();
     this.teamService.createTeam(teamCreate).subscribe(team => this.router.navigate(['chat', team.id]));
   }
 
-  getRandomColor() {
+  getRandomColor(): string {
     let letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++ ) {
@@ -63,15 +61,13 @@ export class StartGroupCreateComponent implements OnInit {
 }
 class PasswordValidation {
 
-    static MatchPassword(AC: AbstractControl) {
-       let password = AC.get('password').value; // to get value in input tag
-       let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
-        if(password === '' || password != confirmPassword) {
-            console.log('false');
-            AC.get('confirmPassword').setErrors( {MatchPassword: true} )
-        } else {
-            console.log('true');
-            return null
-        }
+    static MatchPassword(AC: AbstractControl): void {
+      let password = AC.get('password').value; // to get value in input tag
+      let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
+      if (password === '' || password !== confirmPassword) {
+          AC.get('confirmPassword').setErrors( {MatchPassword: true} );
+      } else {
+          return null;
+      }
     }
 }

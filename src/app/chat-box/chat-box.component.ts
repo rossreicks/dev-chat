@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { UserService } from '../services/user.service';
-import { Team, User, Message } from '../services/models';
+import { ITeam, IUser, IMessage } from '../services/models';
 
 @Component({
   selector: 'app-chat-box',
@@ -10,10 +10,9 @@ import { Team, User, Message } from '../services/models';
 })
 export class ChatBoxComponent implements OnInit {
   @Input()
-  team: Team;
+  team: ITeam;
 
-
-  currentUser: User;
+  currentUser: IUser;
 
   constructor(
     private messageService: MessageService,
@@ -22,11 +21,11 @@ export class ChatBoxComponent implements OnInit {
       this.userService.currentUser.subscribe(user => this.currentUser = user);
     }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  sendMessage(data: string) {
-    let message: Message = {
+  sendMessage(data: string): void {
+    let message: IMessage = {
           id: -1,
           user: this.currentUser,
           data: data,

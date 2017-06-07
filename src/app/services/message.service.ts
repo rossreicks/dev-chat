@@ -11,9 +11,9 @@ export class MessageService {
 
   newMessage: Subject<IMessage> = new Subject<IMessage>();
 
-  ws: WebSocket = new WebSocket('ws://192.254.190.129:3000', 'echo-protocol');
+  ws: WebSocket = new WebSocket('ws://192.168.1.5:3000:3000', 'echo-protocol');
 
-  public serverUrl: string = 'http://192.254.190.129:3000/api/';
+  public serverUrl: string = 'http://192.168.1.5:3000/api/';
 
   constructor(private http: Http) {
     this.ws.onmessage = (event) => {
@@ -21,7 +21,7 @@ export class MessageService {
     };
   }
 
-  post(message: IMessage) {
+  post(message: IMessage): Observable<IMessage> {
     this.sendMessage(JSON.stringify(message));
     return this.http.post(this.serverUrl + 'messages', message).map(res => res.json());
   }
@@ -38,7 +38,7 @@ export class MessageService {
     return this.http.get(this.serverUrl + 'messages/{id}').map(res => res.json() as IMessage);
   }
 
-  sendMessage(message) {
+  sendMessage(message): void {
     this.ws.send(message);
   }
 

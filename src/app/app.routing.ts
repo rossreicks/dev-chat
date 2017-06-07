@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChatComponent } from './chat/chat.component';
 import { StartComponent } from './start/start.component';
 
-
 const appRoutes: Routes = [
   { path: 'chat/:teamId', component: ChatComponent},
   { path: 'start', component: StartComponent},

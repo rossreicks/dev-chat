@@ -1,4 +1,4 @@
-export interface IGroup {
+export interface ITeam {
     id: number;
     name: string;
     owner: IUser;
@@ -28,7 +28,7 @@ export interface IMessage {
     user: IUser;
 }
 
-export interface IGroupCreate {
+export interface ITeamCreate {
     email: string;
     password: string;
     team: string;

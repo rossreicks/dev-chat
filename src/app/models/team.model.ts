@@ -1,6 +1,6 @@
-import { IUser, IThread, IGroup } from '../services/models';
+import { IUser, IThread, ITeam } from '../services/models';
 
-export class Group implements IGroup {
+export class Team implements ITeam  {
     name: string;
     id: number;
     owner: IUser;
