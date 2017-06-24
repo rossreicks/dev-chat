@@ -50,9 +50,9 @@ teamRouter.get('/teams/:id', function(req, res) {
           );
           promises.push(
             new Promise((resolve, reject) => {
-                  db.query(`SELECT users.Id, userThreadLookup.username, users.icon from userThreadLookup
-                        LEFT JOIN users on userThreadLookup.userId = users.id
-                        WHERE userThreadLookup.threadId = ?`, thread.id, (err, rows) => {
+                  db.query(`SELECT users.Id, userthreadlookup.nickname, users.icon from userthreadlookup
+                        LEFT JOIN users on userthreadlookup.userId = users.id
+                        WHERE userthreadlookup.threadId = ?`, thread.id, (err, rows) => {
                   if (err) {
                       throw err;
                   }
@@ -114,7 +114,7 @@ teamRouter.post('/teams', (req: any, res: Response) => {
               }
               let userId = user.insertId;
               db.query('INSERT INTO teams (name, description, ownerId) VALUES (?,?, ?)',
-              [req.body.name, desc], (err, team, userId) => {
+              [req.body.name, desc, userId], (err, team) => {
                 if (err) {
                     throw err;
                 }
@@ -124,7 +124,7 @@ teamRouter.post('/teams', (req: any, res: Response) => {
                 if (err) {
                     throw err;
                 }
-                db.query("INSERT INTO userThreadLookup (userId, threadId, username) VALUES (?,?,?)", [userId, teamId, username], (err, lookup) => {
+                db.query("INSERT INTO userthreadlookup (userId, threadId, username) VALUES (?,?,?)", [userId, threadId, username], (err, lookup) => {
                     if (err) {
                         throw err;
                     }

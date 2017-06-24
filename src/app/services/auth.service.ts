@@ -10,7 +10,8 @@ export class AuthenticationService {
     constructor(private http: Http) { }
 
     login(username: string, password: string): Observable<void> {
-        return this.http.get(this.serverUrl + 'authenticate', JSON.stringify({ username: username, password: password }))
+        let loginObject = { email: username, password: password };
+        return this.http.post('/api/authenticate', loginObject)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();

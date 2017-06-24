@@ -1,27 +1,26 @@
-
-
-<div class="" tabindex="100">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        Login
+<div class="container">
+  <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm" novalidate class="form-horizontal">
+      <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !email.valid }">
+          <label for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+          </div>
+          <p *ngIf="loginForm.submitted && !email.valid" name="email" class="help-block">Email is required</p>
       </div>
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
-            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+      <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !password.valid }">
+          <label for="password" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" [(ngModel)]="model.password" id="password" name="password" #password="ngModel" required />
+          </div>
+          <p *ngIf="loginForm.submitted && !password.valid" class="help-block">Password is required</p>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2"> 
+          <button class="btn btn-primary">Login</button>
+          <a (click)=modal.show() class="btn btn-link">Register</a>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-        </div>
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Login</button>
-            <a [routerLink]="['/register']" class="btn btn-link">Register</a>
-        </div>
-    </form>
-    </div>
-  </div>
+      </div>
+  </form>
 </div>
+<app-start-group-create></app-start-group-create>
+

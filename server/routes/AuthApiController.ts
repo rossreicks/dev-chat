@@ -1,40 +1,51 @@
 import { ResponseOptions } from '@angular/http';
 import { Request, Response, Router } from 'express';
 import { db } from '../db';
+let bcrypt = require('bcrypt');
 
 const authRouter: Router = Router();
 
 // Route: /api/authenticate
-let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+// let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
-authRouter.get("/authenticate", (request: Request, response: Response) => {
-    response.json("authenticat");
+// authRouter.get("/authenticate", (request: Request, response: Response) => {
+//     response.json("authenticat");
+// });
+
+authRouter.get('/', (request: Request, response: Response) => {
+    response.json('Found authenticate');
 });
 
-authRouter.post("/authenticate", (request: Request, response: Response) => {
-    let params = request.params();
-
-    // find if any user matches login credentials
-    let filteredUsers = users.filter(user => {
-        return user.username === params.username && user.password === params.password;
-    });
-
-    if (filteredUsers.length) {
-        // if login details are valid return 200 OK with user details and fake jwt token
-        let user = filteredUsers[0];
-        let newresponse = {
-            status: 200,
-            params: {
-                id: user.id,
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                token: 'fake-jwt-token'
-            }};
-        response.json(newresponse);
-    } else {
-        // else return 400 bad request
-        response.send(new Error('Username or password is incorrect'));
+authRouter.post("/", (request: Request, response: Response) => {
+    if(request.body.email) {
+        console.log(request.body.email);
+        db.query('SELECT * FROM users where email=?', request.body.email, (err, rows) => {
+            if(err) {
+                throw err;
+            }
+            if(rows.length) {
+                let user = rows[0];
+                console.log(rows[0]);
+                bcrypt.compare(request.body.password, user.password, (err, res) => {
+                    if(res){
+                        let newresponse = {
+                            status: 200,
+                            params: {
+                                id: user.id,
+                                username: user.username,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                token: 'fake-jwt-token'
+                            }};
+                        response.json(newresponse);
+                    } else {
+                        response.json({message: 'Email or password is incorrect'});
+                    }
+                })
+            } else {
+                response.json({message: 'Email or password is incorrect'});
+            } 
+        })
     }
 });
 
