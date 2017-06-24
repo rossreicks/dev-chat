@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TeamService } from '../services/team.service';
-import { ITeam } from '../services/models';
+import { Team, Thread } from '../services/models';
 
 @Component({
   selector: 'app-chat',
@@ -9,7 +9,8 @@ import { ITeam } from '../services/models';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  team: ITeam;
+  thread: Thread;
+  team: Team;
 
   constructor(private teamService: TeamService,
               private route: ActivatedRoute) { }

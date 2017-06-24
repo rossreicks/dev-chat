@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { UserService } from '../services/user.service';
-import { ITeam, IUser, IMessage } from '../services/models';
+import { Thread, User, Message } from '../services/models';
 
 @Component({
   selector: 'app-chat-box',
@@ -9,27 +9,26 @@ import { ITeam, IUser, IMessage } from '../services/models';
   styleUrls: ['./chat-box.component.css']
 })
 export class ChatBoxComponent implements OnInit {
-  @Input()
-  team: ITeam;
+  @Input() thread: Thread;
 
-  currentUser: IUser;
+  currentUser: User;
 
   constructor(
     private messageService: MessageService,
     private userService: UserService) {
-      this.currentUser = this.userService.getUser();
-      this.userService.currentUser.subscribe(user => this.currentUser = user);
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
   ngOnInit(): void {
   }
 
   sendMessage(data: string): void {
-    let message: IMessage = {
+    let message: Message = {
           id: -1,
           user: this.currentUser,
           data: data,
-          timestamp: new Date()
+          timestamp: new Date(),
+          threadId: this.thread.id
     };
     this.messageService.post(message).subscribe();
   }

@@ -25,7 +25,10 @@ app.use(function(req, res, next) {
 });
 
 //set our api routes
-app.use('/api', api);
+app.use('/api/messages', messageRouter);
+app.use('/api/teams', teamRouter);
+app.use('/api/threads', threadRouter);
+app.use('/api/users', userRouter);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

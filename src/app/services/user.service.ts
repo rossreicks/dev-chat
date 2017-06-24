@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import { Subject } from 'rxjs';
-import { IUser } from './models';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import { User } from '../models/user.model';
+import { User } from './models';
 
 @Injectable()
 export class UserService {
+    constructor(private http: Http) { }
 
-  currentUser: Subject<IUser> = new Subject<IUser>();
+    getAll(): Observable<User[]> {
+        return this.http.get('/api/users', this.jwt()).map((response: Response) => response.json());
+    }
 
-  constructor() {
-      this.currentUser.next(this.getUser());
-  }
+    getById(id: number): Observable<User> {
+        return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
+    }
 
-  setUser(user: IUser): void {
-      this.currentUser.next(user);
-      localStorage.setItem('user', JSON.stringify(user));
-  }
+    create(user: User): Observable<User> {
+        return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    }
 
-  getUser(): IUser {
-      let user = localStorage.getItem('user');
-      return JSON.parse(user);
-  }
+    update(user: User): Observable<User> {
+        return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
+    }
 
+    delete(id: number): Observable<void> {
+        return this.http.delete('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    // private helper methods
+
+    private jwt(): RequestOptions {
+        // create authorization header with jwt token
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            return new RequestOptions({ headers: headers });
+        }
+    }
 }

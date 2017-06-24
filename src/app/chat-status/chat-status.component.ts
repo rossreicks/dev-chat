@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { TeamService } from '../services/team.service';
-import { ITeam, IUser, IThread } from '../services/models';
+import { Team, User, Thread } from '../services/models';
 
 @Component({
   selector: 'app-chat-status',
@@ -10,20 +10,19 @@ import { ITeam, IUser, IThread } from '../services/models';
 })
 export class ChatStatusComponent implements OnInit {
   @Input()
-  team: ITeam;
+  team: Team;
 
-  currentUser: IUser;
-  users: IUser[];
-  threads: IThread[];
+  currentUser: User;
+  users: User[];
+  threads: Thread[];
 
   constructor(private userService: UserService) {
-    this.currentUser = userService.getUser();
-    this.userService.currentUser.subscribe(user => this.currentUser = user);
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit(): void {
-    this.users = this.team.users;
     this.threads = this.team.threads;
+    this.users = this.threads[0].users;
   }
 
 }

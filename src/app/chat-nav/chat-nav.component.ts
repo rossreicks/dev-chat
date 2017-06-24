@@ -3,7 +3,7 @@ import { UserService } from '../services/user.service';
 import { TeamService} from '../services/team.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
-import { ITeam, IUser} from '../services/models';
+import { Team, User} from '../services/models';
 
 @Component({
   selector: 'app-chat-nav',
@@ -12,7 +12,7 @@ import { ITeam, IUser} from '../services/models';
 })
 export class ChatNavComponent implements OnInit {
   @Input()
-  team: ITeam;
+  team: Team;
 
   showModal: boolean;
 

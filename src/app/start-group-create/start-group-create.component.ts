@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { IUser, ITeam, ITeamCreate } from './../services/models';
+import { User, Team, TeamCreate } from './../services/models';
 import { TeamService } from './../services/team.service';
 import {AbstractControl} from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class StartGroupCreateComponent implements OnInit {
   form: FormGroup;
   public visible = false;
-  private visibleAnimate = false;
+  public visibleAnimate = false;
 
   public show(): void {
     this.visible = true;
@@ -44,7 +44,7 @@ export class StartGroupCreateComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.form);
-    let teamCreate: ITeamCreate = this.form.value;
+    let teamCreate: TeamCreate = this.form.value;
     teamCreate.icon = this.getRandomColor();
     this.teamService.createTeam(teamCreate).subscribe(team => this.router.navigate(['chat', team.id]));
   }

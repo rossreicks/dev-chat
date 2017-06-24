@@ -4,12 +4,15 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve && node server.js",
-    "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
-    "pree2e": "webdriver-manager update",
-    "e2e": "protractor",
-    "build": "ng build && node server.js"
+    "start": "concurrently --kill-others \"npm run _server:run\" \"ng serve --aot=true --progress=false --proxy-config proxy.conf.json\"",
+    "lint:client": "ng lint",
+    "lint:server": "tslint './server/**/*.ts' -c ./server/tslint.json --fix",
+    "test:client": "ng test",
+    "e2e:client": "ng e2e",
+    "build": "ng build --prod --sm=false --aot=true --output-path=dist/client && npm run _server:build",
+    "_server:run": "tsc -p ./server && concurrently \"tsc -w -p ./server\" \"nodemon dist/server/bin/www.js\" ",
+    "_server:build": "tsc -p ./server",
+    "postinstall": "npm run build"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +32,7 @@
     "body-parser": "^1.17.2",
     "core-js": "^2.4.1",
     "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.10.2",
     "mysql": "^2.13.0",
     "node.js": "0.0.0",
