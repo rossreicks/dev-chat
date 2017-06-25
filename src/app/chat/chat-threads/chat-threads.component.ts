@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Renderer, AfterViewInit, AfterViewChecked
 import { MessageService } from '../../services/message.service';
 import * as moment from 'moment';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Team, Message } from '../../services/models';
+import { Thread, Message } from '../../services/models';
 
 @Component({
   selector: 'app-chat-threads',
@@ -14,7 +14,7 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
   @ViewChild('content') content: ElementRef;
 
   @Input()
-  team: Team;
+  thread: Thread;
 
   messages: Message[];
 
@@ -40,10 +40,7 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
   }
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.messageService.getAll(+params['threadId'], +params['teamId']))
-    .subscribe(messages => {
-      this.messages = messages;
-    });
+    this.messageService.getAll(this.thread.id).subscribe(messages => this.messages = messages);
   }
 
   scrollToBottom(): void {

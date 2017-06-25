@@ -12,6 +12,7 @@ export interface User {
     email: string;
     nickname: string;
     icon: string;
+    teams: Team[];
 }
 
 export interface Thread {

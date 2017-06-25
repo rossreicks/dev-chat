@@ -4,6 +4,7 @@ import { db } from '../db';
 let bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 import {secret} from '../config';
+import { User } from "../models";
 
 const authRouter: Router = Router();
 
@@ -28,18 +29,20 @@ authRouter.post("/", (request: Request, response: Response) => {
                 let user = rows[0];
                 bcrypt.compare(request.body.password, user.password, (err, res) => {
                     if(res){
-                        let returnUser = {
+                        let returnUser: User = {
                             id: user.id,
                             email: user.email,
-                            icon: user.icon
+                            icon: user.icon,
+                            nickname: '',
+                            teams: []
                         };
                         let token = jwt.sign({ data: returnUser }, secret, { expiresIn: '1d' });
-                        db.query("SELECT userthreadlookup.threadId, threads.teamId from userthreadlookup left join threads on userthreadlookup.threadId = threads.id where userthreadlookup.userId = ?", user.id, (err, ids) => {
+                        db.query("SELECT threads.name as threadName, teams.* from userthreadlookup left join threads on userthreadlookup.threadId = threads.id LEFT JOIN teams ON threads.teamId = teams.id where userthreadlookup.userId =?", user.id, (err, teams) => {
                             if(err) {
                                 throw err;
                             }
-                            
-                            response.status(200).json({token: token, threadId: ids[0].threadId, teamId: ids[0].teamId, user: returnUser});
+                            returnUser.teams = teams;
+                            response.status(200).json({token: token, threadName: teams[0].threadName, teamName: teams[0].name, user: returnUser});
                         })
                     } else {
                         response.status(500).send("username and password combination incorrect");

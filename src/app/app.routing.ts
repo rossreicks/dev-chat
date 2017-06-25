@@ -9,7 +9,7 @@ import { AuthGuard } from './services/guards/index';
 const appRoutes: Routes = [
   { path: '', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
-  { path: 'chat/:teamId/:threadId', component: ChatComponent, canActivate: [AuthGuard]},
+  { path: 'chat/:teamName/:threadName', component: ChatComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
   { path: '**', redirectTo: '' }
 ];

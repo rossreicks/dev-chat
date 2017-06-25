@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.loginForm.value.email, this.loginForm.value.password)
             .subscribe(
                 data => {
-                    let teamId = data.json().teamId;
-                    let threadId = data.json().threadId;
-                    this.router.navigateByUrl('/chat/' + teamId + '/' + threadId);
+                    let teamName = data.json().teamName;
+                    let threadName = data.json().threadName;
+                    this.router.navigateByUrl('/chat/' + teamName + '/' + threadName);
                 },
                 error => {
                     this.error = error._body;

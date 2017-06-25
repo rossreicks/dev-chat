@@ -18,15 +18,20 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(x => {
-      this.teamService.getTeam(x['teamId']).subscribe(team => {
+      let availableTeams = JSON.parse(localStorage.getItem('currentUser')).user.teams;
+      let index = availableTeams.map(x => x.name).indexOf(x['teamName']);
+      if(index !== -1) {
+        this.teamService.getTeam(availableTeams[index].id).subscribe(team => {
         this.team = team;
-        let threadId = +x['threadId'];
-        let index = this.team.threads.map(y => y.id).indexOf(threadId);
+        let threadName = x['threadName'];
+        let index = this.team.threads.map(y => y.name).indexOf(threadName);
         if(index !== -1) {
           this.thread = this.team.threads[index];
-
         }
       });
+      } else {
+        console.log('not authorized to view this team');
+      }
     });
   }
 

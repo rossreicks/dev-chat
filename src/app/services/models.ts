@@ -13,6 +13,7 @@ export interface User {
     username: string;
     icon: string;
     nickname: string;
+    teams: Team[];
 }
 
 export interface Thread {

@@ -36,9 +36,9 @@ export class MessageService {
     return this.http.delete(this.serverUrl + 'messages').map(res => res.json());
   }
 
-  getAll(threadId: number, teamId: number): Observable<Message[]> {
+  getAll(threadId: number): Observable<Message[]> {
     let auth = this.authService.createAuthorizationHeader();
-    return this.http.get(this.serverUrl + 'messages/' + teamId + '/' + threadId, {headers: auth})
+    return this.http.get(this.serverUrl + 'messages/' + threadId, {headers: auth})
     .map(messages => messages.json() as Message[]);
   }
 

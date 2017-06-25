@@ -6,7 +6,7 @@
       <app-chat-nav *ngIf="!!thread" [thread]="thread"></app-chat-nav>
     </div>
     <div class="row">
-      <app-chat-threads [team]="team"></app-chat-threads>
+      <app-chat-threads *ngIf=!!thread [thread]="thread"></app-chat-threads>
     </div>
     <div class="chat-box">
       <app-chat-box [thread]="thread"></app-chat-box>
