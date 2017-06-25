@@ -26,7 +26,7 @@ messageRouter.use((request: AuthorizedRequest, response: Response, next: NextFun
 messageRouter.get('/:teamId/:threadId', (req: Request, res: Response) => {
     let threadId = req.params['threadId'];
 
-    db.query('SELECT messages.*, users.email, users.icon, userthreadlookup.nickname FROM messages LEFT JOIN users ON users.id = messages.userId LEFT JOIN userthreadlookup ON messages.threadId = userthreadlookup.threadId WHERE messages.threadId=?', threadId, (err, rows) => {
+    db.query('SELECT messages.*, users.email, users.icon, userthreadlookup.nickname FROM messages LEFT JOIN users ON users.id = messages.userId LEFT JOIN userthreadlookup ON messages.threadId = userthreadlookup.threadId AND users.id = userthreadlookup.userId WHERE messages.threadId=?', threadId, (err, rows) => {
       if (err) {
         throw err;
       }

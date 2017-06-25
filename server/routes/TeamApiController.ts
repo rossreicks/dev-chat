@@ -37,20 +37,7 @@ teamRouter.get('/:id', function(req, res) {
       if (rows) {
         threads = rows;
         threads.forEach(thread => {
-          promises.push(
-            new Promise((resolve, reject) => {
-              db.query("SELECT * FROM messages WHERE threadId=?", thread.id, (err, rows) => {
-                if (err) {
-                  reject(err);
-                }
-                if (!rows) {
-                  rows = [];
-                }
-                thread.messages = rows;
-                resolve(rows);
-              });
-            })
-          );
+          thread.messages = [];
           promises.push(
             new Promise((resolve, reject) => {
                   db.query(`SELECT users.id, userthreadlookup.nickname, users.icon, users.email from userthreadlookup

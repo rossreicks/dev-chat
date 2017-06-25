@@ -27,31 +27,39 @@ app.use("/api/authenticate", authRouter);
 const WebSocket = require('ws');
 const http = require('http');
 const url = require('url');
+const jwt = require('jsonwebtoken');
+import { secret } from './config';
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 import { db } from './db';
 
-wss.on('connection', function connection(ws, req) {
-    console.log('connection');
-  const location = url.parse(req.url, true);
-  // authenticate request header based using token
+let users: Array<any> = [];
 
-  ws.on('message', function incoming(message) {
-    //db.query('SELECT * FROM userthreadlookup WHERE threadId = ?', message.threadId, (err, res) => {
-        //res.forEach(element => {
-            
-        //});
-    //})
-    
-    //TODO: need to filter by only people in this thread
-    console.log(wss.clients);
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(message);
-        }
+wss.on('connection', function connection(ws, req) {
+    let token = req.url.substring(8);
+    let decoded = jwt.verify(token, secret);
+
+    let userId = decoded.data.id;
+
+    users[userId] = ws;
+
+    ws.on('message', function incoming(message) {
+        db.query('SELECT * FROM userthreadlookup WHERE threadId=?', JSON.parse(message).threadId, (err, res) => {
+            if(err) {
+                throw err;
+            }
+            res.forEach(element => {
+                if(users[element.userId] && users[element.userId].readyState === WebSocket.OPEN) {
+                    users[element.userId].send(message);
+                }
+            });
+        });
+    });
+
+    ws.on('close', (foo) => {
+        users[userId] = null;
     })
-  });
 });
 
 server.listen(8080, function listening() {

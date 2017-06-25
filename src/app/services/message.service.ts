@@ -12,7 +12,8 @@ export class MessageService {
 
   newMessage: Subject<Message> = new Subject<Message>();
 
-  ws: WebSocket = new WebSocket('ws://localhost:8080', 'echo-protocol');
+  token: string = localStorage.getItem('token');
+  ws: WebSocket = new WebSocket('ws://localhost:8080?token=' + this.token, 'echo-protocol');
 
   public serverUrl: string = 'api/';
 
