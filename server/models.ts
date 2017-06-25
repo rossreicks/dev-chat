@@ -10,7 +10,7 @@ export interface Team {
 export interface User {
     id: number;
     email: string;
-    username: string;
+    nickname: string;
     icon: string;
 }
 
@@ -20,6 +20,7 @@ export interface Thread {
     name: string;
     teamId: number;
     users: User[];
+    description: string;
 }
 
 export interface Message {

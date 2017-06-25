@@ -8,13 +8,12 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { routing, appRoutingProviders } from './app.routing';
 
 import { AppComponent } from './app.component';
-import { ChatNavComponent } from './chat-nav/chat-nav.component';
-import { ChatThreadsComponent } from './chat-threads/chat-threads.component';
-import { ChatBoxComponent } from './chat-box/chat-box.component';
-import { ChatStatusComponent } from './chat-status/chat-status.component';
-import { StartComponent } from './start/start.component';
-import { LoginComponent } from './login/login.component';
-import { StartGroupCreateComponent } from './start-group-create/start-group-create.component';
+import { ChatNavComponent } from './chat/chat-nav/chat-nav.component';
+import { ChatThreadsComponent } from './chat/chat-threads/chat-threads.component';
+import { ChatBoxComponent } from './chat/chat-box/chat-box.component';
+import { ChatStatusComponent } from './chat/chat-status/chat-status.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 import { ChatComponent } from './chat/chat.component';
 import { AlertComponent } from './alert/alert.component';
 
@@ -33,9 +32,8 @@ import { AuthGuard } from './services/guards/index';
     ChatThreadsComponent,
     ChatBoxComponent,
     ChatStatusComponent,
-    StartComponent,
     LoginComponent,
-    StartGroupCreateComponent,
+    RegisterComponent,
     ChatComponent,
     AlertComponent
   ],

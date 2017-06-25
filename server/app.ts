@@ -24,6 +24,40 @@ app.use("/api/threads", threadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/authenticate", authRouter);
 
+const WebSocket = require('ws');
+const http = require('http');
+const url = require('url');
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+import { db } from './db';
+
+wss.on('connection', function connection(ws, req) {
+    console.log('connection');
+  const location = url.parse(req.url, true);
+  // authenticate request header based using token
+
+  ws.on('message', function incoming(message) {
+    //db.query('SELECT * FROM userthreadlookup WHERE threadId = ?', message.threadId, (err, res) => {
+        //res.forEach(element => {
+            
+        //});
+    //})
+    
+    //TODO: need to filter by only people in this thread
+    console.log(wss.clients);
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+        }
+    })
+  });
+});
+
+server.listen(8080, function listening() {
+  console.log('Listening on %d', server.address().port);
+});
+
 if (app.get("env") === "production") {
     // app.use(express.static(path.join(__dirname, "/../client")));
 }

@@ -12,6 +12,7 @@ export interface User {
     email: string;
     username: string;
     icon: string;
+    nickname: string;
 }
 
 export interface Thread {
@@ -20,6 +21,7 @@ export interface Thread {
     name: string;
     teamId: number;
     users: User[];
+    description: string;
 }
 
 export interface Message {

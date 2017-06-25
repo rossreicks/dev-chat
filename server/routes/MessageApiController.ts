@@ -3,15 +3,16 @@ import { json, urlencoded } from 'body-parser';
 import { verify } from 'jsonwebtoken';
 import { db } from '../db';
 import { secret } from '../config';
+import { Message, User } from "../models";
+const jwt = require('jsonwebtoken');
 
 const messageRouter: Router = Router();
 
 type AuthorizedRequest = Request & { headers: { authorization: string} };
 
 messageRouter.use((request: AuthorizedRequest, response: Response, next: NextFunction) => {
-    const token = request.headers.authorization;
-
-    verify(token, secret, (tokenError) => {
+    const token = request.headers['x-access-token'];
+    jwt.verify(token, secret, (tokenError) => {
         if (tokenError) {
             return response.status(403).json({
                 message: 'Invalid token, please Log in first',
@@ -22,16 +23,31 @@ messageRouter.use((request: AuthorizedRequest, response: Response, next: NextFun
     });
 });
 
-messageRouter.get('/messages/thread/:threadId', (req: Request, res: Response) => {
+messageRouter.get('/:teamId/:threadId', (req: Request, res: Response) => {
     let threadId = req.params['threadId'];
 
-    db.query('SELECT * FROM messages WHERE threadId=?', threadId, (err, rows) => {
+    db.query('SELECT messages.*, users.email, users.icon, userthreadlookup.nickname FROM messages LEFT JOIN users ON users.id = messages.userId LEFT JOIN userthreadlookup ON messages.threadId = userthreadlookup.threadId WHERE messages.threadId=?', threadId, (err, rows) => {
       if (err) {
         throw err;
       }
-      if (rows.length > 0) {
-        res.json(rows);
-      }
+      let messages: Message[] = [];
+      rows.forEach(element => {
+        let user: User = {
+          id: element.userId,
+          email: element.email,
+          icon: element.icon,
+          nickname: element.nickname
+        }
+        let message: Message = {
+          id: element.id,
+          threadId: element.threadId,
+          data: element.data,
+          timestamp: element.timestamp,
+          user: user
+        }
+        messages.push(message);
+      });
+      res.json(messages);
     });
 });
 
@@ -44,12 +60,26 @@ messageRouter.get('/messages', (req: Request, res: Response) => {
   });
 });
 
-messageRouter.post('/messages', (req: Request, res: Response) => {
-    db.query('INSERT INTO messages (data, timestamp, userId, threadId) VALUES (?, ?, ?, ?)',
-             [req.body.data, new Date(), req.body.user.Id, req.body.threadId],
-             (err, message) => {
-               res.json("inserted");
-             });
+messageRouter.post('/', (req: Request, res: Response) => {
+    db.query('INSERT INTO messages (data, userId, threadId) VALUES (?, ?, ?)',
+      [req.body.data, req.body.user.id, req.body.threadId], (err, message) => {
+        if(err) {
+          throw err;
+        }
+        if(message) {
+          let returnMessage: Message = {
+              id: message.insertId,
+              threadId: req.body.threadId,
+              data: req.body.data,
+              timestamp: new Date(),
+              user: req.body.user
+          }
+          res.json(returnMessage);
+        } else {
+          res.json("not inserted inserted");
+        }
+
+      });
 });
 
 messageRouter.delete('/messages', (req, res) => {

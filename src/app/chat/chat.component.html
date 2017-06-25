@@ -3,12 +3,12 @@
 
   <div class="chat-container">
     <div class="row">
-      <app-chat-nav [team]="team"></app-chat-nav>
+      <app-chat-nav *ngIf="!!thread" [thread]="thread"></app-chat-nav>
     </div>
     <div class="row">
       <app-chat-threads [team]="team"></app-chat-threads>
     </div>
-    <div class="row">
+    <div class="chat-box">
       <app-chat-box [thread]="thread"></app-chat-box>
     </div>
   </div>

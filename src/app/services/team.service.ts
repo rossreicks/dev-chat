@@ -8,13 +8,16 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TeamService {
 
-  public serverUrl: string = 'http://127.0.0.1:3000/api/';
+  public serverUrl: string = 'api/';
 
   constructor(private http: Http) { }
 
-  createTeam(teamCreateForm: TeamCreate): Observable<Team> {
-      console.log(teamCreateForm);
-      return this.http.post(this.serverUrl + 'teams', teamCreateForm).map(res => res.json());
+  createTeam(teamCreateForm: TeamCreate): Observable<any> {
+      return this.http.post(this.serverUrl + 'teams', teamCreateForm).map(res => {
+          localStorage.setItem('token', res.json().token);
+          localStorage.setItem('currentUser', JSON.stringify(res.json()));
+          return res.json()
+      });
   }
 
   getTeam(teamId: number): Observable<Team> {

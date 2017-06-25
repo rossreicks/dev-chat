@@ -2,18 +2,15 @@ import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ChatComponent } from './chat/chat.component';
-import { StartComponent } from './start/start.component';
-import { LoginComponent } from './login/login.component';
-import { StartGroupCreateComponent } from './start-group-create/start-group-create.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 import { AuthGuard } from './services/guards/index';
 
 const appRoutes: Routes = [
-  { path: '', component: StartComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: StartGroupCreateComponent },
-  { path: 'chat/:teamId/:threadName', component: ChatComponent},
-  { path: 'chat/:teamId', component: ChatComponent},
+  { path: '', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent },
+  { path: 'chat/:teamId/:threadId', component: ChatComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
-  { path: 'start', component: StartComponent},
   { path: '**', redirectTo: '' }
 ];
 

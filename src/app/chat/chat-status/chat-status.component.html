@@ -1,6 +1,6 @@
-<!--<div class="status-container">
+<div class="status-container">
   <span class="team-name"><span class="name">{{team.name}} </span><i class="fa fa-angle-down"></i><i class="fa fa-bell-o pull-right"></i></span>
-  <div class="user"><i class="fa fa-circle"></i> {{currentUser.name}}</div>
+  <div class="user"><i class="fa fa-circle"></i> {{currentUser.email}}</div>
   
   <h2 class="heading">CHANNELS ({{threads.length}})<i class="fa fa-plus-circle pull-right"></i></h2>
   <div class="channel" *ngFor="let thread of threads" >
@@ -8,10 +8,8 @@
   </div>
 
   <h2 class="heading">DIRECT MESSAGES <i class="fa fa-plus-circle pull-right"></i></h2>
-  <div class="user" >
-    <i class="fa fa-circle"></i> {{currentUser.name}} (you)
-  </div>
   <div class="user" *ngFor="let user of users" >
-    <i class="fa fa-circle-o"></i> {{user.name}}
+    <i class="fa fa-circle"></i> {{user.nickname}}
+    <span *ngIf="user.id == currentUser.id">(you)</span>
   </div>
-</div>-->
+</div>

@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { User, Team, TeamCreate } from './../services/models';
-import { TeamService } from './../services/team.service';
+import { User, Team, TeamCreate } from '../../services/models';
+import { TeamService } from '../../services/team.service';
 import {AbstractControl} from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-start-group-create',
-  templateUrl: './start-group-create.component.html',
-  styleUrls: ['./start-group-create.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class StartGroupCreateComponent implements OnInit {
+export class RegisterComponent {
   form: FormGroup;
+  errors: string;
+
   public visible = false;
   public visibleAnimate = false;
 
@@ -39,14 +41,16 @@ export class StartGroupCreateComponent implements OnInit {
     });
    }
 
-  ngOnInit(): void {
-  }
-
   onSubmit(): void {
     console.log(this.form);
     let teamCreate: TeamCreate = this.form.value;
     teamCreate.icon = this.getRandomColor();
-    this.teamService.createTeam(teamCreate).subscribe(team => this.router.navigate(['chat', team.id]));
+    this.teamService.createTeam(teamCreate).subscribe(res => {
+      this.router.navigate(['chat', res.teamId, res.threadId])
+    }, errors => {
+      this.errors = "";
+      errors.json().forEach(x => this.errors += x.msg);
+    })
   }
 
   getRandomColor(): string {

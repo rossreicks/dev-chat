@@ -9,16 +9,17 @@ export class AuthenticationService {
 
     constructor(private http: Http) { }
 
-    login(username: string, password: string): Observable<void> {
+    login(username: string, password: string): Observable<Response> {
         let loginObject = { email: username, password: password };
         return this.http.post('/api/authenticate', loginObject)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
-                let user = response.json();
-                if (user && user.token) {
+                if (response) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('token', response.json().token);
+                    localStorage.setItem('currentUser', JSON.stringify(response.json()));
                 }
+                return response;
             });
     }
 
@@ -26,4 +27,11 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
+
+    createAuthorizationHeader(): Headers {
+        let headers = new Headers();
+        headers.append('x-access-token', localStorage.getItem('token'));
+        return headers;
+    }
+
 }

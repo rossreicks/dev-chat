@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Renderer, AfterViewInit, AfterViewChecked, ElementRef, Input } from '@angular/core';
-import { MessageService } from '../services/message.service';
+import { MessageService } from '../../services/message.service';
 import * as moment from 'moment';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Team, Message } from '../services/models';
+import { Team, Message } from '../../services/models';
 
 @Component({
   selector: 'app-chat-threads',
@@ -22,6 +22,7 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
               private messageService: MessageService,
               private route: ActivatedRoute) {
     this.messageService.newMessage.subscribe((newMessage) => {
+      console.log(newMessage);
       this.appendMessage(newMessage);
     });
   }
@@ -39,7 +40,7 @@ export class ChatThreadsComponent implements OnInit, AfterViewInit, AfterViewChe
   }
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.messageService.getAll(params['threadName'], +params['teamId']))
+    this.route.params.switchMap((params: Params) => this.messageService.getAll(+params['threadId'], +params['teamId']))
     .subscribe(messages => {
       this.messages = messages;
     });

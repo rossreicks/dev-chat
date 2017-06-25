@@ -1,0 +1,11 @@
+<div #content class="threads-container">
+    <div *ngFor="let message of messages; let i = index;" class="message-container">
+        <span class="thumbnail" [ngStyle]="{'background-color': message.user.icon}">{{message.user.nickname.length ? message.user.nickname.charAt(0) : message.user.email.charAt(0)}}
+        </span>
+        <div class="message">
+            <strong class="name">{{message.user.nickname.length > 0 ? message.user.nickname : message.user.email}}</strong>
+            <a class="date">{{convertDate(message.timeStamp)}}</a>
+            <div class="data">{{message.data}}</div>
+        </div>
+    </div>
+</div>

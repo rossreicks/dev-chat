@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MessageService } from '../services/message.service';
-import { UserService } from '../services/user.service';
-import { Thread, User, Message } from '../services/models';
+import { MessageService } from '../../services/message.service';
+import { UserService } from '../../services/user.service';
+import { Thread, User, Message } from '../../services/models';
 
 @Component({
   selector: 'app-chat-box',
@@ -16,7 +16,7 @@ export class ChatBoxComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private userService: UserService) {
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser')).user;
     }
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class ChatBoxComponent implements OnInit {
   sendMessage(data: string): void {
     let message: Message = {
           id: -1,
-          user: this.currentUser,
+          user: this.thread.users[this.thread.users.map(x => x.id).indexOf(this.currentUser.id)],
           data: data,
           timestamp: new Date(),
           threadId: this.thread.id
