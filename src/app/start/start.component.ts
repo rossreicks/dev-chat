@@ -17,7 +17,7 @@ export class StartComponent implements OnInit {
 
     currentUser: User;
     users: User[] = [];
- 
+
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
@@ -25,7 +25,7 @@ export class StartComponent implements OnInit {
         this.loadAllUsers();
     }
     deleteUser(id: number): void {
-        this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
+        this.userService.delete(id).subscribe(() => { this.loadAllUsers(); });
     }
     toggleGroupCreateForm(): void {
         this.groupCreateForm = !this.groupCreateForm;

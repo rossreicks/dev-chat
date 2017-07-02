@@ -6,11 +6,11 @@ let bcrypt = require('bcrypt');
 const authRouter: Router = Router();
 
 // Route: /api/authenticate
-// let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+ let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
-// authRouter.get("/authenticate", (request: Request, response: Response) => {
-//     response.json("authenticat");
-// });
+ authRouter.get("/authenticate", (request: Request, response: Response) => {
+     response.json("authenticat");
+ });
 
 authRouter.get('/', (request: Request, response: Response) => {
     response.json('Found authenticate');

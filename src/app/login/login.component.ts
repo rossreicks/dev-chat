@@ -16,7 +16,7 @@ import { StartGroupCreateComponent } from '../start-group-create/start-group-cre
 export class LoginComponent implements OnInit {
   @ViewChild(StartGroupCreateComponent)
   public readonly modal: StartGroupCreateComponent;
-  
+
   form: FormGroup;
   public visible = false;
   public visibleAnimate = false;
