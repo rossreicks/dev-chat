@@ -8,7 +8,16 @@ import { User } from "../models";
 
 const authRouter: Router = Router();
 
-// BaseRoute: /api/authenticate
+// Route: /api/authenticate
+ let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+
+ authRouter.get("/authenticate", (request: Request, response: Response) => {
+     response.json("authenticat");
+ });
+
+authRouter.get('/', (request: Request, response: Response) => {
+    response.json('Found authenticate');
+});
 
 // login
 authRouter.post("/", (request: Request, response: Response) => {
