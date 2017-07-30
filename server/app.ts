@@ -2,12 +2,10 @@ import { json, urlencoded } from "body-parser";
 import * as compression from "compression";
 import * as express from "express";
 import * as path from "path";
-
 import { messageRouter } from './routes/MessageApiController';
 import { teamRouter } from './routes/TeamApiController';
-import { threadRouter } from './routes/ThreadApiController';
-import { userRouter } from './routes/UserApiController';
 import { authRouter } from './routes/AuthApiController';
+const mailer = require('express-mailer');
 
 const app: express.Application = express();
 
@@ -16,12 +14,24 @@ app.disabled('x-powered-by');
 app.use(json());
 app.use(compression());
 app.use(urlencoded({ extended: true }));
+app.set('views', path.resolve(__dirname, '../../views'));
+app.set('view engine', 'jade');
+
+mailer.extend(app, {
+    from: 'no-reply@example.com',
+    host: 'smtp.gmail.com',
+    secureConnection: true,
+    port: 465,
+    transportMethod: 'SMTP',
+    auth: {
+        user: 'therossman13@gmail.com',
+        pass: 'Titwwpoc1'
+    }
+});
 
 // api routes
 app.use("/api/messages", messageRouter);
 app.use("/api/teams", teamRouter);
-app.use("/api/threads", threadRouter);
-app.use("/api/users", userRouter);
 app.use("/api/authenticate", authRouter);
 
 const WebSocket = require('ws');

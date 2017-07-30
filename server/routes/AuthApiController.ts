@@ -8,17 +8,9 @@ import { User } from "../models";
 
 const authRouter: Router = Router();
 
-// Route: /api/authenticate
-// let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+// BaseRoute: /api/authenticate
 
-// authRouter.get("/authenticate", (request: Request, response: Response) => {
-//     response.json("authenticat");
-// });
-
-authRouter.get('/', (request: Request, response: Response) => {
-    response.json('Found authenticate');
-});
-
+// login
 authRouter.post("/", (request: Request, response: Response) => {
     if(request.body.email) {
         db.query('SELECT * FROM users where email=?', request.body.email, (err, rows) => {

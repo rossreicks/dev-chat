@@ -18,7 +18,6 @@ messageRouter.use((request: AuthorizedRequest, response: Response, next: NextFun
                 message: 'Invalid token, please Log in first',
             });
         }
-
         next();
     });
 });
@@ -36,7 +35,8 @@ messageRouter.get('/:threadId', (req: Request, res: Response) => {
           id: element.userId,
           email: element.email,
           icon: element.icon,
-          nickname: element.nickname
+          nickname: element.nickname,
+          teams: []
         }
         let message: Message = {
           id: element.id,
@@ -49,15 +49,6 @@ messageRouter.get('/:threadId', (req: Request, res: Response) => {
       });
       res.json(messages);
     });
-});
-
-messageRouter.get('/messages', (req: Request, res: Response) => {
-  db.query('SELECT * FROM messages', (err, rows, fields) => {
-    if (err) {
-      throw err;
-    }
-    res.json(rows);
-  });
 });
 
 messageRouter.post('/', (req: Request, res: Response) => {
@@ -80,10 +71,6 @@ messageRouter.post('/', (req: Request, res: Response) => {
         }
 
       });
-});
-
-messageRouter.delete('/messages', (req, res) => {
-  res.send('DELETE called on message api endpoint');
 });
 
 export { messageRouter };

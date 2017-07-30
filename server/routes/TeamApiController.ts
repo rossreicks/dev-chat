@@ -13,8 +13,9 @@ teamRouter.use(validator());
 const jwt = require('jsonwebtoken');
 import {secret} from '../config';
 
-// Route: /api/users
+// Route: /api/teams
 
+// get team by id
 teamRouter.get('/:id', function(req, res) {
   console.log(req.params['id']);
   let teamId = req.params['id'];
@@ -69,9 +70,9 @@ teamRouter.get('/:id', function(req, res) {
   });
 });
 
-teamRouter.post('/', (req: any, res: Response) => {
+// Register a new team
+teamRouter.post('/', (req: any, res: any) => {
   if (req.body) {
-    console.log(req.body);
     req.checkBody('name', 'Team name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Email does not appear to be valid').isEmail();
@@ -81,14 +82,14 @@ teamRouter.post('/', (req: any, res: Response) => {
     let errors = req.validationErrors();
 
     if (errors) {
-      res.status(400).send(JSON.stringify(errors));
+      res.status(500).send(JSON.stringify(errors));
     } else {
       db.query('SELECT * FROM users where email=?', req.body.email, (err, rows) => {
         if (err) {
             throw err;
         }
         if (rows.length > 0) {
-          res.status(400).send('A user with this email already exists');
+          res.status(500).send('A user with this email already exists');
         } else {
           let icon = req.body.icon === undefined ? null : req.body.icon;
           let desc = req.body.description === undefined ? null : req.body.description;
@@ -97,10 +98,7 @@ teamRouter.post('/', (req: any, res: Response) => {
             if (err) {
                 throw err;
             }
-            bcrypt.compare(req.body.password, bcryptedPassword, (err, result) => {
-              console.log("match: " + result);
-            })
-            db.query('INSERT INTO users (email, password, icon) VALUES (?, ?, ?)',
+            db.query('INSERT INTO users (email, password, icon, isVerified) VALUES (?, ?, ?, false)',
              [req.body.email, bcryptedPassword, icon],
              (err, user) => {
               if (err) {
@@ -128,7 +126,14 @@ teamRouter.post('/', (req: any, res: Response) => {
                           icon: icon
                       };
                       let token = jwt.sign({ data: returnUser }, secret, { expiresIn: '1d' });
-                          
+                      res.mailer.send('email', {
+                        to: 'rreicks13@gmail.com',
+                        subject: 'Test Email'
+                      }, (err) => {
+                        if(err) {
+                          throw err;
+                        }
+                      });
                       res.status(200).json({token: token, threadId: threadId, teamId: teamId, user: returnUser});
                   });
                 });
