@@ -13,7 +13,7 @@ export class AlertComponent {
 
     constructor(private alertService: AlertService) { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.alertService.getMessage().subscribe(message => { this.message = message; });
     }
 }
